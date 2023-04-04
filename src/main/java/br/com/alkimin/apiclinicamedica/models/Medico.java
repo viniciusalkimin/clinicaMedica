@@ -14,14 +14,15 @@ import java.util.UUID;
 @Table(name = "medicos")
 public class Medico {
 
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String nome;
     private String email;
     private String telefone;
     private String crm;
-    @Embedded
+    @Enumerated(EnumType.STRING)
     private Especialidade especialidade;
     @Embedded
     private Endereco endereco;

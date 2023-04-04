@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-@Repository
-public interface MedicoRepository extends JpaRepository<Medico, UUID> {
-}
+//@Repository
+//public interface MedicoRepository extends JpaRepository<Medico, UUID> {
+//}
