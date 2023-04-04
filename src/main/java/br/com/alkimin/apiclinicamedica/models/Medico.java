@@ -26,12 +26,12 @@ public class Medico {
     private Especialidade especialidade;
     @Embedded
     private Endereco endereco;
-    public Medico (MedicoDTO medicoDTO) {
-        this.nome = medicoDTO.getNome();
-        this.email = medicoDTO.getEmail();
-        this.telefone = medicoDTO.getTelefone();
-        this.crm = medicoDTO.getCrm();
-        this.especialidade = medicoDTO.getEspecialidade();
-        this.endereco = medicoDTO.getEndereco();
+    public Medico (MedicoRecord medicoRecord) {
+        this.nome = medicoRecord.nome();
+        this.email = medicoRecord.email();
+        this.telefone = medicoRecord.telefone();
+        this.crm = medicoRecord.crm();
+        this.especialidade = medicoRecord.especialidade();
+        this.endereco = new Endereco(medicoRecord.endereco());
     }
 }
