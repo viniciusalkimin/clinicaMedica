@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -21,6 +20,11 @@ public class MedicoService {
     public void salvarMedico(Medico medico) {
         repository.save(medico);
     }
+
+    public Optional<Medico> medicoById(UUID id) {
+        return repository.findById(id);
+    }
+
 
     public Page<Medico> listarMedicos(Pageable paginacao) {
         return repository.findAllByestaAtivoTrue(paginacao);
