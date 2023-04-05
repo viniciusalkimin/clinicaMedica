@@ -1,8 +1,8 @@
 package br.com.alkimin.apiclinicamedica.service;
 
-import br.com.alkimin.apiclinicamedica.models.Medico;
-import br.com.alkimin.apiclinicamedica.models.MedicoEditarRecord;
-import br.com.alkimin.apiclinicamedica.repository.MedicoRepository;
+import br.com.alkimin.apiclinicamedica.domain.models.Medico;
+import br.com.alkimin.apiclinicamedica.domain.models.MedicoEditarRecord;
+import br.com.alkimin.apiclinicamedica.domain.repository.MedicoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,5 +44,9 @@ public class MedicoService {
             medico.get().desativar();
             repository.save(medico.get());
         }
+    }
+
+    public Optional<Medico> detalharMedico(UUID id) {
+        return repository.findById(id);
     }
 }

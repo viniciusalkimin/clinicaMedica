@@ -1,12 +1,11 @@
-package br.com.alkimin.apiclinicamedica.repository;
+package br.com.alkimin.apiclinicamedica.domain.repository;
 
-import br.com.alkimin.apiclinicamedica.models.Medico;
+import br.com.alkimin.apiclinicamedica.domain.models.Medico;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.UUID;
 
 @Repository

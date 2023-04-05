@@ -1,4 +1,4 @@
-package br.com.alkimin.apiclinicamedica.models;
+package br.com.alkimin.apiclinicamedica.domain.models;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -17,4 +17,9 @@ public record EnderecoRecord(
         String uf,
         String complemento,
         String numero) {
+
+        public EnderecoRecord(Endereco endereco) {
+                this(endereco.getLogradouro(), endereco.getBairro(), endereco.getCep(), endereco.getCidade(), endereco.getUf(), endereco.getComplemento(), endereco.getNumero());
+        }
+
 }

@@ -1,4 +1,4 @@
-package br.com.alkimin.apiclinicamedica.models;
+package br.com.alkimin.apiclinicamedica.domain.models;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -23,4 +23,5 @@ public record MedicoRecord(
         @NotNull
         @Valid
         EnderecoRecord endereco) {
+
 }

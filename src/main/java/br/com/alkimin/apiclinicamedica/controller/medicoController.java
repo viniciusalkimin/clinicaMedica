@@ -1,9 +1,7 @@
 package br.com.alkimin.apiclinicamedica.controller;
 
-import br.com.alkimin.apiclinicamedica.models.Medico;
-import br.com.alkimin.apiclinicamedica.models.MedicoEditarRecord;
-import br.com.alkimin.apiclinicamedica.models.MedicoListaRecord;
-import br.com.alkimin.apiclinicamedica.models.MedicoRecord;
+import br.com.alkimin.apiclinicamedica.domain.models.*;
+import br.com.alkimin.apiclinicamedica.domain.models.*;
 import br.com.alkimin.apiclinicamedica.service.MedicoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -28,6 +26,12 @@ public class medicoController {
     @GetMapping
     public ResponseEntity<Page<MedicoListaRecord>> helloMedicos(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
         return ResponseEntity.ok().body(service.listarMedicos(paginacao).map(MedicoListaRecord::new));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity detalharMedico(@PathVariable UUID id) {
+        var med = service.detalharMedico(id).get();
+        return ResponseEntity.ok().body(new MedicoDetalhar(med));
     }
 
     @PostMapping

@@ -1,4 +1,4 @@
-package br.com.alkimin.apiclinicamedica.models;
+package br.com.alkimin.apiclinicamedica.domain.models;
 
 import java.util.UUID;
 

@@ -1,8 +1,5 @@
-package br.com.alkimin.apiclinicamedica.models;
+package br.com.alkimin.apiclinicamedica.domain.models;
 
-import br.com.alkimin.apiclinicamedica.models.Endereco;
-import br.com.alkimin.apiclinicamedica.models.Especialidade;
-import br.com.alkimin.apiclinicamedica.models.Medico;
 import lombok.Data;
 
 import java.util.UUID;
