@@ -1,4 +1,4 @@
-package br.com.alkimin.apiclinicamedica.infra;
+package br.com.alkimin.apiclinicamedica.infra.exception;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
