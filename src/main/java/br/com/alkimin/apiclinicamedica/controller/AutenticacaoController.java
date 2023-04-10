@@ -1,6 +1,7 @@
 package br.com.alkimin.apiclinicamedica.controller;
 
 import br.com.alkimin.apiclinicamedica.domain.models.DadosAtutenticacao;
+import br.com.alkimin.apiclinicamedica.domain.models.DadosToken;
 import br.com.alkimin.apiclinicamedica.domain.models.Usuario;
 import br.com.alkimin.apiclinicamedica.infra.security.TokenService;
 import br.com.alkimin.apiclinicamedica.service.AutenticacaoService;
@@ -23,7 +24,8 @@ public class AutenticacaoController {
     public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAtutenticacao dados) {
         var token = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
         var auth = authenticationManager.authenticate(token);
-        return ResponseEntity.ok(tokenService.gerarToken((Usuario) auth.getPrincipal()));
+        var jwtToken = tokenService.gerarToken((Usuario) auth.getPrincipal());
+        return ResponseEntity.ok(new DadosToken(jwtToken));
     }
 
 
