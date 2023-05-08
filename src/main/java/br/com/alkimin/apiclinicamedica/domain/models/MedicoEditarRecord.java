@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public record MedicoEditarRecord(
         @NotNull
-        UUID id,
+        Long id,
         String nome,
         String telefone,
         EnderecoRecord enderecoRecord) {

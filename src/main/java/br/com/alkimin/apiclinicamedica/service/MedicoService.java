@@ -21,7 +21,7 @@ public class MedicoService {
         repository.save(medico);
     }
 
-    public Optional<Medico> medicoById(UUID id) {
+    public Optional<Medico> medicoById(Long id) {
         return repository.findById(id);
     }
 
@@ -38,7 +38,7 @@ public class MedicoService {
         }
     }
 
-    public void desativarMedico(UUID id) {
+    public void desativarMedico(Long id) {
         var medico = repository.findById(id);
         if(medico.isPresent()) {
             medico.get().desativar();
@@ -46,7 +46,7 @@ public class MedicoService {
         }
     }
 
-    public Optional<Medico> detalharMedico(UUID id) {
+    public Optional<Medico> detalharMedico(Long id) {
         return repository.findById(id);
     }
 }

@@ -1,7 +1,6 @@
 package br.com.alkimin.apiclinicamedica.controller;
 
 import br.com.alkimin.apiclinicamedica.domain.models.*;
-import br.com.alkimin.apiclinicamedica.domain.models.*;
 import br.com.alkimin.apiclinicamedica.service.MedicoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -19,7 +18,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/medicos")
 @AllArgsConstructor
-public class medicoController {
+public class MedicoController {
 
     private MedicoService service;
 
@@ -29,7 +28,7 @@ public class medicoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity detalharMedico(@PathVariable UUID id) {
+    public ResponseEntity detalharMedico(@PathVariable Long id) {
         var med = service.detalharMedico(id).get();
         return ResponseEntity.ok().body(new MedicoDetalhar(med));
     }
@@ -52,7 +51,7 @@ public class medicoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> desativarMedico(@PathVariable UUID id) {
+    public ResponseEntity<?> desativarMedico(@PathVariable Long id) {
         service.desativarMedico(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
