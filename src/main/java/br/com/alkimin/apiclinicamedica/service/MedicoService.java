@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -27,7 +26,7 @@ public class MedicoService {
 
 
     public Page<Medico> listarMedicos(Pageable paginacao) {
-        return repository.findAllByestaAtivoTrue(paginacao);
+        return repository.findAllByativoTrue(paginacao);
     }
 
     public void editarMedico(MedicoEditarRecord medicoEditarRecord) {

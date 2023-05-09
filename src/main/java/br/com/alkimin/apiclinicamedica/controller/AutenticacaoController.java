@@ -1,10 +1,9 @@
 package br.com.alkimin.apiclinicamedica.controller;
 
-import br.com.alkimin.apiclinicamedica.domain.models.DadosAtutenticacao;
+import br.com.alkimin.apiclinicamedica.domain.models.DadosAutenticacao;
 import br.com.alkimin.apiclinicamedica.domain.models.DadosToken;
 import br.com.alkimin.apiclinicamedica.domain.models.Usuario;
 import br.com.alkimin.apiclinicamedica.infra.security.TokenService;
-import br.com.alkimin.apiclinicamedica.service.AutenticacaoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,7 @@ public class AutenticacaoController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAtutenticacao dados) {
+    public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAutenticacao dados) {
         var token = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
         var auth = authenticationManager.authenticate(token);
         var jwtToken = tokenService.gerarToken((Usuario) auth.getPrincipal());

@@ -26,7 +26,7 @@ public class Medico {
     private Especialidade especialidade;
     @Embedded
     private Endereco endereco;
-    private boolean estaAtivo;
+    private Boolean ativo;
     public Medico (MedicoRecord medicoRecord) {
         this.nome = medicoRecord.nome();
         this.email = medicoRecord.email();
@@ -34,7 +34,7 @@ public class Medico {
         this.crm = medicoRecord.crm();
         this.especialidade = medicoRecord.especialidade();
         this.endereco = new Endereco(medicoRecord.endereco());
-        this.estaAtivo = true;
+        this.ativo = true;
     }
 
     public void editarMedico(MedicoEditarRecord medicoEditarRecord) {
@@ -50,6 +50,6 @@ public class Medico {
     }
 
     public void desativar(){
-        this.estaAtivo = false;
+        this.ativo = false;
     }
 }

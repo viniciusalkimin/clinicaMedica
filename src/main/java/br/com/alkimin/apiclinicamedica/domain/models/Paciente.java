@@ -28,4 +28,12 @@ public class Paciente {
     private Endereco endereco;
 
     private Boolean ativo;
+
+    public Paciente(PacienteRecord pacienteRecord) {
+        this.nome = pacienteRecord.nome();
+        this.email = pacienteRecord.email();
+        this.cpf = pacienteRecord.cpf();
+        this.endereco = new Endereco(pacienteRecord.enderecoRecord());
+        this.ativo = pacienteRecord.ativo();
+    }
 }

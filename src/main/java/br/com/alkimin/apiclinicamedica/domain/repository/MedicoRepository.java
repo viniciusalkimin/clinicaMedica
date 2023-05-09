@@ -14,22 +14,31 @@ import java.util.UUID;
 @Repository
 public interface MedicoRepository extends JpaRepository<Medico, Long> {
 
-    public Page<Medico> findAllByestaAtivoTrue(Pageable paginacao);
+    public Page<Medico> findAllByativoTrue(Pageable paginacao);
 
     @Query("""
-            select m from Medico m
-            where
-            m.ativo = 1
-            and
-            m.especialidade = :especialidade
-            and
+                select m from Medico m
+                where
+                m.ativo = 1
+                and
+                m.especialidade = :especialidade
+                and
                 m.id not in(
-                    select c.medico.id from Consulta c
-                    where
-                    c.data = :data
-            )
-            order by rand()
-            limit 1
+                        select c.medico.id from Consulta c
+                        where
+                        c.data = :data
+                )
+                order by rand()
+                limit 1
+                """)
+    public Medico buscarMedicoAleatorioPorEspecialidade(Especialidade especialidade, LocalDateTime data);
+
+    @Query("""
+            select m.ativo
+            from Medico m
+            where
+            m.id = :id
             """)
-    Medico buscarMedicoAleatorioPorEspecialidade(Especialidade especialidade, LocalDateTime data);
+    Boolean findAtivoById(Long id);
+
 }

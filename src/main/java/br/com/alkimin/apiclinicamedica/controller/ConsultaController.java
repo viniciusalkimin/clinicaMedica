@@ -1,5 +1,7 @@
 package br.com.alkimin.apiclinicamedica.controller;
 
+import br.com.alkimin.apiclinicamedica.domain.models.DadosAgendamentoConsulta;
+import br.com.alkimin.apiclinicamedica.domain.models.DadosCancelamentoConsulta;
 import br.com.alkimin.apiclinicamedica.service.ConsultaService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -16,9 +18,15 @@ public class ConsultaController {
 
     private ConsultaService consultaService;
 
-   @PostMapping
+   @PostMapping("/agendar")
     public ResponseEntity agendar(@RequestBody @Valid DadosAgendamentoConsulta dados) {
         consultaService.agendar(dados);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/cancelar")
+    public ResponseEntity cancelar(@RequestBody DadosCancelamentoConsulta dados) {
+       consultaService.cancelar(dados);
+       return ResponseEntity.ok().build();
     }
 }

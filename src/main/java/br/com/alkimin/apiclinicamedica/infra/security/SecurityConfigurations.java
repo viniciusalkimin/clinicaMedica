@@ -26,7 +26,7 @@ public class SecurityConfigurations {
         return http.csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                .requestMatchers("/h2-console/**", "/login").permitAll()
                 .anyRequest().authenticated()
                 .and().addFilterAfter(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

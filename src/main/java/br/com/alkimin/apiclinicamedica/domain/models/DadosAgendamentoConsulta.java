@@ -1,6 +1,5 @@
-package br.com.alkimin.apiclinicamedica.controller;
+package br.com.alkimin.apiclinicamedica.domain.models;
 
-import br.com.alkimin.apiclinicamedica.domain.models.Especialidade;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 
