@@ -2,6 +2,7 @@ package br.com.alkimin.apiclinicamedica.controller;
 
 import br.com.alkimin.apiclinicamedica.domain.models.*;
 import br.com.alkimin.apiclinicamedica.service.MedicoService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,11 +24,13 @@ public class MedicoController {
     private MedicoService service;
 
     @GetMapping
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<Page<MedicoListaRecord>> helloMedicos(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
         return ResponseEntity.ok().body(service.listarMedicos(paginacao).map(MedicoListaRecord::new));
     }
 
     @GetMapping("/{id}")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity detalharMedico(@PathVariable Long id) {
         var med = service.detalharMedico(id).get();
         return ResponseEntity.ok().body(new MedicoDetalhar(med));
@@ -35,6 +38,7 @@ public class MedicoController {
 
     @PostMapping
     @Transactional
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<?> criarMedico(@RequestBody @Valid MedicoRecord medicoRecord, UriComponentsBuilder uriBuilder) {
         var med = new Medico(medicoRecord);
         service.salvarMedico(med);
@@ -44,6 +48,7 @@ public class MedicoController {
 
     @PutMapping
     @Transactional
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<?> editarMedico(@RequestBody @Valid MedicoEditarRecord medicoEditarRecord) {
         service.editarMedico(medicoEditarRecord);
         var med = service.medicoById(medicoEditarRecord.id());
@@ -51,6 +56,7 @@ public class MedicoController {
     }
 
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<?> desativarMedico(@PathVariable Long id) {
         service.desativarMedico(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

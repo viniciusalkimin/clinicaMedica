@@ -2,6 +2,7 @@ package br.com.alkimin.apiclinicamedica.controller;
 
 import br.com.alkimin.apiclinicamedica.domain.models.*;
 import br.com.alkimin.apiclinicamedica.service.PacienteService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ public class PacienteController {
 
     @PostMapping
     @Transactional
+    @SecurityRequirement(name = "bearer-key")
     public ResponseEntity<?> criarPaciente(@RequestBody @Valid PacienteRecord pacienteRecord, UriComponentsBuilder uriBuilder) {
         var pac = new Paciente(pacienteRecord);
         pacienteService.salvarPaciente(pac);

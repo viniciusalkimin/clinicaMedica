@@ -17,6 +17,11 @@ import java.util.NoSuchElementException;
 @RestControllerAdvice
 public class ExceptionHandlerClinicaMedica {
 
+    @ExceptionHandler(ValidacaoException.class)
+    public ResponseEntity tratarErroRegraDeNegocio(ValidacaoException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
     @ExceptionHandler({EntityNotFoundException.class, NoSuchElementException.class})
     public ResponseEntity exceptionHandler404(){
         return ResponseEntity.notFound().build();

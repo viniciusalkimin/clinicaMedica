@@ -1,20 +1,18 @@
 package br.com.alkimin.apiclinicamedica.service;
 
-import br.com.alkimin.apiclinicamedica.domain.models.DadosAgendamentoConsulta;
-import br.com.alkimin.apiclinicamedica.domain.models.Consulta;
-import br.com.alkimin.apiclinicamedica.domain.models.DadosCancelamentoConsulta;
-import br.com.alkimin.apiclinicamedica.domain.models.Medico;
+import br.com.alkimin.apiclinicamedica.domain.models.*;
 import br.com.alkimin.apiclinicamedica.domain.repository.ConsultaRepository;
 import br.com.alkimin.apiclinicamedica.domain.repository.MedicoRepository;
 import br.com.alkimin.apiclinicamedica.domain.repository.PacienteRepository;
-import br.com.alkimin.apiclinicamedica.domain.validacoes.ValidadorAgendamentoDeConsultas;
+import br.com.alkimin.apiclinicamedica.domain.validacoes.agendamento.ValidadorAgendamentoDeConsultas;
+import br.com.alkimin.apiclinicamedica.domain.validacoes.cancelamento.ValidadorCancelamentoDeConsulta;
 import br.com.alkimin.apiclinicamedica.infra.exception.ValidacaoException;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -26,9 +24,11 @@ public class ConsultaService {
 
     private PacienteRepository pacienteRepository;
 
-    private List<ValidadorAgendamentoDeConsultas> validadores;
+    private List<ValidadorAgendamentoDeConsultas> validadorAgendamentoDeConsultas;
 
-    public void agendar(DadosAgendamentoConsulta dados) {
+    private List<ValidadorCancelamentoDeConsulta> validadorCancelamentoDeConsultaLid;
+
+    public ConsultaListaRecord agendar(DadosAgendamentoConsulta dados) {
 
         if(dados.idMedico() != null && !medicoRepository.existsById(dados.idMedico())) {
             throw new ValidacaoException("Id do médico informado não existe!");
@@ -37,13 +37,29 @@ public class ConsultaService {
             throw new ValidacaoException("Id do paciente informado não existe!");
         }
 
-        validadores.forEach(v -> v.validar(dados));
+        validadorAgendamentoDeConsultas.forEach(v -> v.validar(dados));
         var medico = escolherMedico(dados);
+        if (medico == null) {
+            throw new ValidacaoException("Não existe médico disponível na data selecionada.");
+        }
         var paciente = pacienteRepository.findById(dados.idPaciente()).get();
 
         var consulta = new Consulta(null, medico, paciente, dados.data(), true, null);
         consultaRepository.save(consulta);
+        return new ConsultaListaRecord(consulta);
+    }
 
+    public void cancelar(DadosCancelamentoConsulta dados) {
+
+        if(!consultaRepository.existsById(dados.idConsulta())) {
+            throw new ValidacaoException("Id de consulta não existe;");
+        }
+
+        validadorCancelamentoDeConsultaLid.forEach( v -> v.validar(dados));
+
+        var consultaCancelar = consultaRepository.findById(dados.idConsulta());
+
+        consultaCancelar.get().cancelar(dados.motivoCancelamento());
     }
 
     private Medico escolherMedico(DadosAgendamentoConsulta dados) {
@@ -56,17 +72,8 @@ public class ConsultaService {
         return medicoRepository.buscarMedicoAleatorioPorEspecialidade(dados.especialidade(), dados.data());
     }
 
-    public void cancelar(DadosCancelamentoConsulta dados) {
-        var consulta = consultaRepository.findById(dados.idConsulta()).get();
-        var horarioAgendado = consulta.getData();
-        var agora = LocalDateTime.now();
-        var intervalo = agora.until(horarioAgendado, ChronoUnit.HOURS);
-        if(intervalo < 24L) {
-            throw new ValidacaoException("Não é possivel cancelar consulta com menos de 24 horas!");
-        }
-        if(dados.motivoCancelamento() == null) {
-            throw new ValidacaoException("Não é possivel cancelar consulta sem informar o motivo!");
-        }
-        consultaRepository.cancelar(dados.idConsulta(), dados.motivoCancelamento().toString());
+
+    public List<Consulta> listarTodas() {
+        return consultaRepository.findAll();
     }
 }

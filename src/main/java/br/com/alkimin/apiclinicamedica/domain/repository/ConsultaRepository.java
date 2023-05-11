@@ -11,18 +11,7 @@ import java.time.LocalDateTime;
 
 @Repository
 public interface ConsultaRepository extends JpaRepository<Consulta, Long> {
-
-    @Transactional
-    @Query(value = "UPDATE consultas SET ativa = false, motivocancelamento = :motivoCancelamento WHERE id = :idConsulta", nativeQuery = true)
-    void cancelar(Long idConsulta, String motivoCancelamento);
-
     Boolean existsByPacienteIdAndDataBetween(Long idPaciente, LocalDateTime primeiroHorario, LocalDateTime ultimoHorario);
 
     Boolean existsByMedicoIdAndDataAndMotivoCancelamentoIsNull(Long idMedico, LocalDateTime data);
 }
-/*    @Query("""
-            UPDATE consultas c
-            SET c.motivocancelamento = :motivoCancelamento
-            and c.ativa = 1
-            where c.id = :idConsulta
-            """)*/

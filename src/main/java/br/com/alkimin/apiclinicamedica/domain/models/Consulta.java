@@ -31,4 +31,8 @@ public class Consulta {
     private Boolean ativa;
 
     private MotivoCancelamento motivoCancelamento;
+
+    public void cancelar(MotivoCancelamento motivoCancelamento) {
+        this.motivoCancelamento = motivoCancelamento;
+    }
 }

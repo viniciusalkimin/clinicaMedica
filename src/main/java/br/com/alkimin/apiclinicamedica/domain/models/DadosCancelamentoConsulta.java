@@ -1,4 +1,6 @@
 package br.com.alkimin.apiclinicamedica.domain.models;
 
-public record DadosCancelamentoConsulta(Long idConsulta, MotivoCancelamento motivoCancelamento) {
+import jakarta.validation.constraints.NotNull;
+
+public record DadosCancelamentoConsulta(@NotNull Long idConsulta, @NotNull MotivoCancelamento motivoCancelamento) {
 }

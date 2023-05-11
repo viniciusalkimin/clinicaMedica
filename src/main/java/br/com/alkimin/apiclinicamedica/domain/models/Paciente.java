@@ -33,6 +33,7 @@ public class Paciente {
         this.nome = pacienteRecord.nome();
         this.email = pacienteRecord.email();
         this.cpf = pacienteRecord.cpf();
+        this.telefone = pacienteRecord.telefone();
         this.endereco = new Endereco(pacienteRecord.enderecoRecord());
         this.ativo = pacienteRecord.ativo();
     }
