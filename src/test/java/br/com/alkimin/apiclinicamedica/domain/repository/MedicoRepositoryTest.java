@@ -15,12 +15,9 @@ import java.time.temporal.TemporalAdjusters;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-/*
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
-*/
-
 class MedicoRepositoryTest {
 
     @Autowired
@@ -29,7 +26,7 @@ class MedicoRepositoryTest {
     @Autowired
     private TestEntityManager em;
 
-   // @Test
+    @Test
     void buscarMedicoAleatorioPorEspecialidade() {
         var agora = LocalDateTime.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY))
                 .plusHours(2);
@@ -37,7 +34,7 @@ class MedicoRepositoryTest {
         var paciente = cadastrarPaciente("Paciente", "paciente@email.com", "00000000000");
         cadastrarConsulta(medico, paciente, agora);
         var medicoLivre = medicoRepository.buscarMedicoAleatorioPorEspecialidade(Especialidade.DERMATOLOGIA, agora);
-        assertThat(medicoLivre).isNotNull();
+        assertThat(medicoLivre).isNull();
     }
 
     private void cadastrarConsulta(Medico medico, Paciente paciente, LocalDateTime data) {
