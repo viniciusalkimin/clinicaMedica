@@ -17,20 +17,22 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
     public Page<Medico> findAllByativoTrue(Pageable paginacao);
 
     @Query("""
-                select m from Medico m
+            select m from Medico m
+            where
+            m.ativo = true
+            and
+            m.especialidade = :especialidade
+            and
+            m.id not in(
+                select c.medico.id from Consulta c
                 where
-                m.ativo = 1
+                c.data = :data
                 and
-                m.especialidade = :especialidade
-                and
-                m.id not in(
-                        select c.medico.id from Consulta c
-                        where
-                        c.data = :data
-                )
-                order by rand()
-                limit 1
-                """)
+                c.motivoCancelamento is null
+            )
+            order by rand()
+            limit 1
+        """)
     public Medico buscarMedicoAleatorioPorEspecialidade(Especialidade especialidade, LocalDateTime data);
 
     @Query("""

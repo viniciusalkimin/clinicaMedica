@@ -37,4 +37,7 @@ public class Paciente {
         this.endereco = new Endereco(pacienteRecord.enderecoRecord());
         this.ativo = pacienteRecord.ativo();
     }
+
+    public Paciente(DadosCadastroPaciente dadosCadastroPaciente) {
+    }
 }

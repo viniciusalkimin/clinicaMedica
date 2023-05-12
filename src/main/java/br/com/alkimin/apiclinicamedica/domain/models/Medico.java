@@ -37,6 +37,9 @@ public class Medico {
         this.ativo = true;
     }
 
+    public Medico(DadosCadastroMedico dadosCadastroMedico) {
+    }
+
     public void editarMedico(MedicoEditarRecord medicoEditarRecord) {
         if(medicoEditarRecord.nome() != null) {
             this.nome = medicoEditarRecord.nome();
