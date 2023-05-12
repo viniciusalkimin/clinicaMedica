@@ -38,6 +38,13 @@ public class Medico {
     }
 
     public Medico(DadosCadastroMedico dadosCadastroMedico) {
+        this.ativo = true;
+        this.nome = dadosCadastroMedico.nome();
+        this.email = dadosCadastroMedico.email();
+        this.telefone = dadosCadastroMedico.telefone();
+        this.crm = dadosCadastroMedico.crm();
+        this.especialidade = dadosCadastroMedico.especialidade();
+        this.endereco = new Endereco(dadosCadastroMedico.endereco());
     }
 
     public void editarMedico(MedicoEditarRecord medicoEditarRecord) {
